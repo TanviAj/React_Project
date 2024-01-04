@@ -1,0 +1,868 @@
+[
+	{
+		"template_name": "translation_template",
+		"ui": {
+			"selection": [
+				{
+					"target_attrbiute": "col_br",
+					"_rule_type": "arithmetic",
+					"_rule_derivation": {
+						"_operation": "addition",
+						"_type": "_function",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "Addition",
+									"_type": "Arithematic_operator",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_YV"
+										},
+										{
+											"_type": "col",
+											"_value": "Col_NC"
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_yv_val",
+					"_rule_type": "conditional",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguents": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_YV"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_YV"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_YV"
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_dot_bin_val",
+					"_rule_type": "conditional",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_operation": "addition",
+													"_type": "arithmetic_function",
+													"_arguments": [
+														{
+															"_type": "col",
+															"_value": "Col_suv_commercial"
+														},
+														{
+															"_type": "col",
+															"_value": "Col_suv_creta"
+														}
+													]
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_operation": "addition",
+													"_type": "arithmetic_function",
+													"_arguments": [
+														{
+															"_type": "col",
+															"_value": "Col_suv_commercial"
+														},
+														{
+															"_type": "col",
+															"_value": "Col_suv_creta"
+														}
+													]
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_operation": "addition",
+											"_type": "arithmetic_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_commercial"
+												},
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												}
+											]
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_bin_val",
+					"_rule_type": "selection",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_suv_creta"
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	},
+  {
+		"template_name": "translation_template1",
+		"ui": {
+			"selection": [
+				{
+					"target_attrbiute": "col_br",
+					"_rule_type": "arithmetic",
+					"_rule_derivation": {
+						"_operation": "addition",
+						"_type": "_function",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "Addition",
+									"_type": "Arithematic_operator",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_YV"
+										},
+										{
+											"_type": "col",
+											"_value": "Col_NC"
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_yv_val",
+					"_rule_type": "conditional",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguents": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_YV"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_YV"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_YV"
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_BR"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_dot_bin_val",
+					"_rule_type": "conditional",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_operation": "addition",
+													"_type": "arithmetic_function",
+													"_arguments": [
+														{
+															"_type": "col",
+															"_value": "Col_suv_commercial"
+														},
+														{
+															"_type": "col",
+															"_value": "Col_suv_creta"
+														}
+													]
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_operation": "addition",
+													"_type": "arithmetic_function",
+													"_arguments": [
+														{
+															"_type": "col",
+															"_value": "Col_suv_commercial"
+														},
+														{
+															"_type": "col",
+															"_value": "Col_suv_creta"
+														}
+													]
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_operation": "addition",
+											"_type": "arithmetic_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_commercial"
+												},
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												}
+											]
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"target_attrbiute": "col_bin_val",
+					"_rule_type": "selection",
+					"_rule_derivation": {
+						"_operation": "if_else",
+						"_type": "conditional",
+						"_conditions": [
+							{
+								"_condition": {
+									"_rule_name": "rule_target_1",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-7"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_2",
+									"_operation": "AND",
+									"_type": "logical_operator",
+									"_arguments": [
+										{
+											"_operation": "equals",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										},
+										{
+											"_operation": "greater_than",
+											"_type": "comparison_function",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_suv_creta"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								},
+								"_result": {
+									"_type": "int",
+									"_value": "-8"
+								}
+							},
+							{
+								"_condition": {
+									"_rule_name": "rule_target_3",
+									"_operation": "ELSE",
+									"_type": "conditional_else"
+								},
+								"_result": {
+									"_type": "arithmetic_function",
+									"_operation": "division",
+									"_arguments": [
+										{
+											"_type": "col",
+											"_value": "Col_suv_creta"
+										},
+										{
+											"_type": "function",
+											"_value": "NULLIF",
+											"_arguments": [
+												{
+													"_type": "col",
+													"_value": "Col_auto_bin_dis"
+												},
+												{
+													"_type": "int",
+													"_value": "0"
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+]

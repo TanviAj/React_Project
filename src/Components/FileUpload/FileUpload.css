@@ -1,0 +1,59 @@
+.Files{
+    position: relative;
+    width: 100%;
+}
+
+.FileType{
+    position: absolute;
+    left: 0;
+    align-items: center;
+    text-align: center;
+    margin-top: 200px;
+    margin-left: 500px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    background-color: rgba(74,109,180,0.88);
+}
+
+
+.FileType1{
+    position: absolute;
+    right: 0;
+    align-items: center;
+    text-align: center;
+    margin-top: 200px;
+    margin-right: 200px;
+    border: 2px solid grey;
+    border-radius: 20px;
+    background-color: rgba(74,109,180,0.88);
+}
+
+.FileTypeButtons{
+    position: absolute;
+    display: flex;
+    flex-direction: column; 
+    /* bottom: 50px; */
+    top: 40px;
+    margin-top: 60%;
+    margin-left: 115px;
+}
+
+.FileType1Buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    /* bottom: 50px; */
+    top: 60%;
+    margin-top: 40%;
+    margin-left: 100px;
+}
+
+
+
+.uploadButton{
+margin-left: 5px;
+margin-bottom:20px;
+}
+
+ 

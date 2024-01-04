@@ -1,0 +1,149 @@
+
+.auth-form-container, .login-form, .register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 600px) {
+  .auth-form-container {
+    padding: 5rem;
+    border: 1px solid white;
+    border-radius: 10px;
+    margin: 0.5rem;
+  }
+}
+
+label {
+  text-align: left;
+  padding: 0.25rem 0;
+}
+
+input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+}
+
+button {
+  /* border: 0; */
+  background-color: rgb(139, 185, 245);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #101011;
+}
+
+.link-btn {
+  background: none;
+  color: white;
+  text-decoration: underline;
+}
+
+
+
+/*Layout css*/
+body {
+  margin: 0;
+  padding: 0;
+  background: hsl(193, 47%, 68%);
+}
+
+div.VNavBar{
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  height: 100%;
+  background: hsl(195, 71%, 95%);
+  border-bottom-right-radius: 30px;
+}
+
+div.VNavbarContainer {
+
+  height: 100%;
+  position:fixed;
+  width: 220px;
+  z-index: -1;
+  /* margin-top: 46px; */
+  height: 100%;
+  /* top: 46px;
+  bottom: 0px;
+  overflow: auto; */
+  /* Hide the scrollbar */
+  background-color: rgba(74,109,180,255);
+  /* border-bottom-right-radius: 30px; */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+div.VNavbarContainer::-webkit-scrollbar {
+  display: none;
+}
+.VNavbarNav{
+  height: 100%;
+  /* background-color: rgba(74,109,180,0.88); */
+  margin-top: 76px;
+}
+.VNavbarList {
+  height: 100%;
+}
+
+.bottomlistitemshelp{
+  list-style: none;
+  bottom: 10%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+.bottomlistitemslogout{
+  list-style: none;
+  bottom: 3%;
+  position: absolute;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.navbaritem1{
+  --icon-space: 1.2em;
+  color: rgba(255, 255, 255, 0.842);
+  text-decoration: none;
+  vertical-align: middle;
+  font-family: 'Montserrat', sans-serif;
+  font-size: medium;
+  transition: all 0.5s ease; /* Adjust timing function as needed */
+  box-sizing: border-box; 
+}
+
+.toplistitems.selected,
+.bottomlistitemshelp.selected,
+.navbaritem1.selected,
+.material-symbols-outlined.selected {
+    color: rgba(74,109,180,0.88);
+                                    /* Change to your desired background color */
+    padding-left: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;/* Change to your desired text color */
+    transition: all 0.5s ease; 
+    /* Adjust timing function as needed */
+    box-sizing: border-box;
+    overflow: hidden; 
+    pointer-events: none;
+    background-color: hsl(195, 71%, 95%);
+      /* Retaining the transition property if needed */
+}
+
+
+/* Icons */
+.material-icons.md-18 {
+  font-size: 20px;
+  color: #ececec;
+}
+
+.material-symbols-outlined{
+  color: rgba(255, 255, 255, 0.842);
+  font-size: 20px;
+  transition: all 0.5s ease; /* Adjust timing function as needed */
+    box-sizing: border-box; 
+}

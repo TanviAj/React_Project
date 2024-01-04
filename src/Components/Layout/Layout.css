@@ -1,0 +1,23 @@
+.sidebarMenuIcon {
+    list-style: none;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+.sidebarMenuList{
+    --icon-space: 1.2em;
+    color: rgba(255, 255, 255, 0.842);
+    text-decoration: none;
+    vertical-align: middle;
+    font-family: 'Montserrat', sans-serif;
+    font-size: medium;
+    transition: all 0.5s ease; /* Adjust timing function as needed */
+    box-sizing: border-box; 
+  }
+  
+  .sidebarMenuList:hover{
+    font-size: medium;
+    color: rgba(255, 255, 255);
+    font-weight: 550;
+  }

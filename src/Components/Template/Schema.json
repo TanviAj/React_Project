@@ -1,0 +1,96 @@
+[
+    {
+        "table_name": "my_table",
+        "columns": [
+            {
+                "name": "Col_YV",
+                "data_type": "INTEGER"
+            },
+            {
+                "name": "Col_NC",
+                "data_type": "STRING"
+            },
+            {
+                "name": "Col_BR",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_YV_val",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_suv_commercial",
+                "data_type": "INTEGER"
+            },
+            {
+                "name": "Col_suv_creta",
+                "data_type": "STRING"
+            },
+            {
+                "name": "Col_auto_bin_dis",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_suv_dot_cons",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_dot_bin_val",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_bin_val",
+                "data_type": "DATE"
+            }	
+        ]
+    },
+    {
+        "table_name": "my_table11",
+        "columns": [
+            {
+                "name": "Col_YV1",
+                "data_type": "INTEGER"
+            },
+            {
+                "name": "Col_NC1",
+                "data_type": "STRING"
+            },
+            {
+                "name": "Col_BR1",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_YV_val",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_suv_commercial",
+                "data_type": "INTEGER"
+            },
+            {
+                "name": "Col_suv_creta",
+                "data_type": "STRING"
+            },
+            {
+                "name": "Col_auto_bin_dis",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_suv_dot_cons",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_dot_bin_val",
+                "data_type": "DATE"
+            },
+            {
+                "name": "Col_bin_val",
+                "data_type": "DATE"
+            }	
+        ]
+    }
+]
+
+
+
+
