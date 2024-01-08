@@ -11,6 +11,7 @@ const Template = () => {
   const [selectedTable, setSelectedTable] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedColumns, setSelectedColumns] = useState([]);
+  const [ruleNames, setRuleNames] = useState([]);
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
 
@@ -82,7 +83,7 @@ const Template = () => {
       if(id && (id.toLowerCase() === curentFileObject.ui.selection[j].target_attrbiute.toLowerCase())){
         console.log("File found:", File);
         console.log("Target Attribute:", curentFileObject.ui.selection[j]);
-        
+        getRuleNames(curentFileObject.ui.selection[j]);
         // Check if File and File.ui are defined
         if (File && File.ui) {
           const { ui } = File;
@@ -106,11 +107,24 @@ const Template = () => {
           console.error("File or File.ui is not defined");
           return null;
         }
+      } else {
+        setRuleNames([]);
       }
       }
     }
   };
-  
+
+  const getRuleNames = (curentFileObject) => {
+    const ruleNames = [];
+    curentFileObject._rule_derivation._conditions.map(condition => ruleNames.push(condition._condition));
+    console.log('ruleNames',ruleNames);
+    if (ruleNames) {
+      setRuleNames(ruleNames);
+    } else {
+      setRuleNames([]);
+    }
+    return ruleNames;
+  };
   
 
   return (
@@ -146,6 +160,9 @@ const Template = () => {
               Aggregation
             </button>
           </div> */}
+        {ruleNames.map((ruleName) => (
+         <button key={ruleName._rule_name}>{ruleName._rule_name}&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        ))}
         </div>
       </div>
 
