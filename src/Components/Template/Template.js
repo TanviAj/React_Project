@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Select from 'react-select';
 import "./Template.css";
 import { Link } from "react-router-dom";
 import File from "./Files.json";
@@ -12,8 +13,24 @@ const Template = () => {
   const [selectedItem, setSelectedItem] = useState("");
   const [selectedColumns, setSelectedColumns] = useState([]);
   const [ruleNames, setRuleNames] = useState([]);
+  const [ruleTypes, setRuleTypes] = useState([]);
+  const [operation, setOperation] = useState([])
+  const [defaultOperation, setDefaultOperation] = useState('');
+  const [selectedOption, setSelectedOption] = useState(null);
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
+
+  const operations = [
+    {
+      label: 'Arithmetic'
+    },
+    {
+      label: 'Conditional'
+    },
+    {
+      label: 'Selection'
+    }
+  ];
 
   // const handleSelection = () => {
   //   setHideSelection(true);
@@ -125,6 +142,54 @@ const Template = () => {
     }
     return ruleNames;
   };
+
+  const handleRuleNameClick = (rule) => {
+    // Do something with the selected file, for example:
+    console.log('Button clicked for file:', rule);
+    getRuleType(rule);
+    // const columnId = file.name;
+    // const selectedConfiguration = findConfigurationById(columnId);
+
+    // if (selectedConfiguration) {
+    //   // Log or use the target attributes
+    //   console.log("Target Attribute:", selectedConfiguration.target_attrbiute);
+    //   console.log("Rule Type:", selectedConfiguration._rule_type);
+    //   // Add more properties as needed
+    // } else {
+    //   console.error("Configuration not found for column with ID:", columnId);
+    // }
+  };
+
+  const getRuleType = (rule) => {
+    console.log('Get Rule Type', rule);
+    const ruletypes = [];
+    ruletypes.push(rule._type);
+    console.log('Rule type:', ruletypes);
+    setOperation(ruletypes);  
+    if (ruletypes) {
+      setRuleTypes(ruletypes);
+    } else {
+      setRuleTypes([]);
+    }
+    return ruletypes;
+  };
+
+  const handleOperationChange = (e) => {
+    setSelectedOption(e);
+    console.log('selection chaanged: ', e);
+  };
+
+  // const handleDefaultOperation = () => {
+  //   console.log('akjnkwbdf',operation);
+  //   if(operation[0] === 'Arithematic_operator'){
+  //     setDefaultOperation('Arithmetic')
+  //   } else if(operation[0] === 'logical_operator' || operation[0] === "conditional_else"){
+  //     setDefaultOperation('Conditional')
+  //   } else if(operation[0] === 'selection'){
+  //     setDefaultOperation('Selection')
+  //   }
+  //   return defaultOperation;
+  // };
   
 
   return (
@@ -161,7 +226,7 @@ const Template = () => {
             </button>
           </div> */}
         {ruleNames.map((ruleName) => (
-         <button key={ruleName._rule_name}>{ruleName._rule_name}&nbsp;&nbsp;&nbsp;&nbsp;</button>
+         <button key={ruleName._rule_name} onClick={() => handleRuleNameClick(ruleName)}>{ruleName._rule_name}&nbsp;&nbsp;&nbsp;&nbsp;</button>
         ))}
         </div>
       </div>
@@ -183,6 +248,15 @@ const Template = () => {
             <button>OR</button>
           </div>
         )} */}
+        {operation.map((oper)=>(
+          <><h4>Operation</h4><Select
+            placeholder="Select Operation"
+            defaultValue={operation[0]}
+            value={selectedOption} // set selected value
+            options={operations} // set list of the data
+            onChange={handleOperationChange} // assign onChange function
+          /></>
+        ))}
       </div>
 
       <div className="navcontainer ">
@@ -219,3 +293,4 @@ const Template = () => {
 };
 
 export default Template;
+
