@@ -17,10 +17,10 @@ function App() {
 
     // initialize a browser router
     const router = createBrowserRouter([
-      // {
-      //   path: "/",
-      //   element: <Login />,
-      // },
+      {
+         path: "/",
+         element: <Login />,
+     },
       {
         path: "",
         element: <Layout />,
@@ -56,7 +56,7 @@ function App() {
 
     <div>
         <Routes>
-           {/* <Route path="/" element={<Login/>}></Route> */}
+           { <Route path="/" element={<Login/>}></Route> }
            <Route path="/" element={<Layout/>}></Route>
            <Route path="/fileupload" element={<FileUpload/>}></Route>
            <Route path="/template" element={<Template/>}></Route>

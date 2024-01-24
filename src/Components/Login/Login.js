@@ -10,7 +10,7 @@ export const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(username);
-        navigate('dashboard')
+        navigate('template')
     }
 
     const handleLogin = () => {

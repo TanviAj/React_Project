@@ -5,27 +5,11 @@ import File from "./Files.json";
 import Schema from "./Schema.json";
 
 const Template = () => {
-  const [showSelectionDiv, setHideSelection] = useState(false);
-  const [showConditionDiv, setHideCondition] = useState(false);
-  const [operatorType, setOperatorType] = useState("");
   const [selectedTable, setSelectedTable] = useState("");
-  const [selectedItem, setSelectedItem] = useState("");
   const [selectedColumns, setSelectedColumns] = useState([]);
+  const [ruleNames, setRuleNames] = useState([]);
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
-
-  // const handleSelection = () => {
-  //   setHideSelection(true);
-  //   setHideCondition(false);
-  //   setOperatorType("Arthimatic");
-  // };
-
-  // const handleCondition = () => {
-  //   setHideSelection(false);
-  //   setHideCondition(true);
-  // };
-
-  // const handleAggregation = () => {};
 
   const onOptionChangeTemplateHandler = (event) => {     
     const selectedTableName = event.target.value;
@@ -82,7 +66,8 @@ const Template = () => {
       if(id && (id.toLowerCase() === curentFileObject.ui.selection[j].target_attrbiute.toLowerCase())){
         console.log("File found:", File);
         console.log("Target Attribute:", curentFileObject.ui.selection[j]);
-        
+        getRuleNames(curentFileObject.ui.selection[j]);
+        //getRuleType(curentFileObject.ui.selection[j]);
         // Check if File and File.ui are defined
         if (File && File.ui) {
           const { ui } = File;
@@ -110,6 +95,18 @@ const Template = () => {
       }
     }
   };
+
+  const getRuleNames = (curentFileObject) => {
+    const ruleNames = [];
+    curentFileObject._rule_derivation._conditions.map(condition => ruleNames.push(condition._condition));
+    console.log('ruleNames',ruleNames);
+    if (ruleNames) {
+      setRuleNames(ruleNames);
+    } else {
+      setRuleNames([]);
+    }
+    return ruleNames;
+  };
   
   
 
@@ -117,59 +114,32 @@ const Template = () => {
     <div className="">
       <div className="container">
         {selectedColumns.map((file) => (
-         <button key={file.id} onClick={() => handleButtonClick(file)}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;</button>
+         <button key={file.id} onClick={() => handleButtonClick(file)}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+         </button>
         ))}
 
       </div>
 
-      <div className="vcontainer">
-        <div className="sidebarContainer">
-          {/* <div>
-            {showButton && <button class="btn btn-secondary selection-btn"onClick={handleSelection}>Selection</button>}
-            
-          </div>
-
-          <div>
-            <button
-              class="btn btn-secondary condition-btn"
-              onClick={handleCondition}
-            >
-              Condition
-            </button>
-          </div>
-
-          <div>
-            <button
-              class="btn btn-secondary aggregation-btn"
-              onClick={handleAggregation}
-            >
-              Aggregation
-            </button>
-          </div> */}
-        </div>
-      </div>
-
       <div className="widecontainer">
-        {/* {showSelectionDiv && (
-          <div className="Button Group vertical">
-            <select>
-              <option value="apple">Arithmatic</option>
-              <option value="orange">Logical</option>
-            </select>
-          
-          </div>
-        )}
+        <div className="wide-inner">
+        <p><label>Select</label></p>
+          <select>
+          <option>Col</option>
+          <option value="column">Column</option>
+          </select> 
+          <br/><br/>
+      
+        <p><label for="table">From</label></p>
+        <input type="text" id="table"/><br/><br/>
 
-        {showConditionDiv && (
-          <div className="btn-group1">
-            <button>And</button>
-            <button>OR</button>
+          <p><label for="condition">Where</label></p>
+          <textarea id="condition" name="condition" rows="2" cols="30" ></textarea>
+        
           </div>
-        )} */}
       </div>
 
       <div className="navcontainer ">
-        <nav>
+        <nav className="nav">
           <div className="links">
             <Link to="/ui">UI</Link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to="/about">SQL</Link>
