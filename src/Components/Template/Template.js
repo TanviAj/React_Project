@@ -10,6 +10,10 @@ const Template = () => {
   const [ruleNames, setRuleNames] = useState([]);
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
+  const [query, setQuery] = useState(null);
+  const [clauseState, setClauseState] = useState({operator1:"", operator2:"", operand1:null, operand2:null});
+
+  // setClauseState({...clauseState, operator2: "add"});
 
   const onOptionChangeTemplateHandler = (event) => {     
     const selectedTableName = event.target.value;
@@ -50,8 +54,8 @@ const Template = () => {
 
     if (selectedConfiguration) {
       // Log or use the target attributes
-      console.log("Target Attribute:", selectedConfiguration.target_attrbiute);
-      console.log("Rule Type:", selectedConfiguration._rule_type);
+      console.log("Target Attribute:", selectedConfiguration.attribute_name);
+      // console.log("Rule Type:", selectedConfiguration._rule_type);
       // Add more properties as needed
     } else {
       console.error("Configuration not found for column with ID:", columnId);
@@ -61,24 +65,26 @@ const Template = () => {
   const findConfigurationById = (id) => {
     for(let i=0;i < File.length; i++){
       let curentFileObject = File[i];
-      console.log('jabcsc',id)
-      for(let j=0;j<curentFileObject.ui.selection.length; j++){
-      if(id && (id.toLowerCase() === curentFileObject.ui.selection[j].target_attrbiute.toLowerCase())){
+      console.log('jabcsc',id, curentFileObject)
+      for(let j=0;j<curentFileObject.query_components.select.length; j++){
+      if(id && (id.toLowerCase() === curentFileObject.query_components.select[j].attribute_name?.toLowerCase())){
         console.log("File found:", File);
-        console.log("Target Attribute:", curentFileObject.ui.selection[j]);
-        getRuleNames(curentFileObject.ui.selection[j]);
+        console.log("Target Attribute:", curentFileObject.query_components.select[j].attribute_name);
+        // getRuleNames(curentFileObject.query_components.select[j]);
+        showQueryContainer(curentFileObject);
+        console.log('curentFileObject',curentFileObject);
         //getRuleType(curentFileObject.ui.selection[j]);
         // Check if File and File.ui are defined
-        if (File && File.ui) {
-          const { ui } = File;
-          console.log("File found in if:", File);
+        console.log('File && File.query_components',File);
+        if (File && File[0].query_components) {
+          const { query_components } = File[0];
       
           // Check if ui.selection is defined
-          if (ui && ui.selection) {
-            const selectedConfiguration = ui.selection.find((config) => config.target_attrbiute === `col_${id}`);
-            debugger;
+          if (query_components && query_components.select) {
+            const selectedConfiguration = query_components.select.find((config) => config.attribute_name.toLowerCase() === id.toLowerCase());
             // Check if a configuration was found
             if (selectedConfiguration) {
+              console.log('selectedConfiguration',selectedConfiguration);
               return selectedConfiguration;
             } else {
               console.error("Configuration not found for column with ID:", id); 
@@ -92,40 +98,99 @@ const Template = () => {
           return null;
         }
       }
+      else {
+        setQuery(null);
+      }
       }
     }
   };
 
-  const getRuleNames = (curentFileObject) => {
-    const ruleNames = [];
-    curentFileObject._rule_derivation._conditions.map(condition => ruleNames.push(condition._condition));
-    console.log('ruleNames',ruleNames);
-    if (ruleNames) {
-      setRuleNames(ruleNames);
-    } else {
-      setRuleNames([]);
-    }
-    return ruleNames;
-  };
+  const handleOperand1Change = (e)=> {
+    e.preventDefault();
+    setClauseState({...clauseState, operand1: e.target.value});
+  }
+  const handleOperand2Change = (e)=> {
+    e.preventDefault();
+    setClauseState({...clauseState, operand2: e.target.value});
+  }
+
+  const handleOperator1Change= (e)=> {
+    e.preventDefault();
+    setClauseState({...clauseState, operator1: e.target.value});
+  }
+
+  const handleOperator2Change= (e)=> {
+    e.preventDefault();
+    setClauseState({...clauseState, operator2: e.target.value});
+  }
+
+  // const getRuleNames = (curentFileObject) => {
+  //   const ruleNames = [];
+  //   curentFileObject._rule_derivation._conditions.map(condition => ruleNames.push(condition._condition));
+  //   console.log('ruleNames',ruleNames);
+  //   if (ruleNames) {
+  //     setRuleNames(ruleNames);
+  //   } else {
+  //     setRuleNames([]);
+  //   }
+  //   return ruleNames;
+  // };
   
+  const showQueryContainer = (selectColumnsArray) => {
+    let noramlQuery;
+    console.log('selectColumnsArray',selectColumnsArray);
+    for(let i=0;i<selectColumnsArray.query_components.select.length;i++) {
+      if(selectColumnsArray.query_components.select[i].attribute_name){
+        noramlQuery = <div className="wide-inner">
+        <p><label>Select</label></p>
+          <select>
+          <option>Col</option>
+          {selectedColumns.map((file) => (
+         <option key={file.id}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+         </option >
+        ))}
+          </select> 
+          <br/><br/>
+      
+        <p><label for="table">From</label></p>
+        <input type="text" id="table" defaultValue={selectColumnsArray.query_components.from.source_name}/><br/><br/>
+
+          <p><label for="condition">Where</label></p>
+          <div className="whereClause">
+          <select value={clauseState.operator1} onChange= {(e) => handleOperator1Change(e)}>
+          <option>Operator 1</option>
+          <option>AND</option>
+          <option>OR</option>
+          </select> 
+          </div>
+        
+          </div>
+      }
+    }
+    {console.log("====>", noramlQuery)}
+    setQuery(noramlQuery);
+  }
   
 
   return (
     <div className="">
       <div className="container">
         {selectedColumns.map((file) => (
-         <button key={file.id} onClick={() => handleButtonClick(file)}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
-         </button>
+          <button key={file.id} onClick={() => handleButtonClick(file)}>
+            {file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
         ))}
-
       </div>
 
       <div className="widecontainer">
-        <div className="wide-inner">
+        {/* <div className="wide-inner">
         <p><label>Select</label></p>
           <select>
           <option>Col</option>
-          <option value="column">Column</option>
+          {selectedColumns.map((file) => (
+         <option key={file.id} onClick={() => handleButtonClick(file)}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+         </option >
+        ))}
           </select> 
           <br/><br/>
       
@@ -135,7 +200,78 @@ const Template = () => {
           <p><label for="condition">Where</label></p>
           <textarea id="condition" name="condition" rows="2" cols="30" ></textarea>
         
-          </div>
+          </div> */}
+        <div className="whereClause">
+          {query}
+          {clauseState.operator1 && (
+            <div>
+              <select
+                value={clauseState.operator2}
+                onChange={(e) => handleOperator2Change(e)}
+              >
+                <option>Operator 2</option>
+                <option>Greater Than ({">"})</option>
+                <option>Less Than ({"<"})</option>
+                <option>Greater Than Equals({">="})</option>
+                <option>Less Than Equals({"<="})</option>
+                <option>Equals({"="})</option>
+                <option>Not Equals({"!="})</option>
+              </select>
+            </div>
+          )}
+
+          {clauseState.operator2 && (
+            <div>
+              <select value={clauseState.operand1} onChange= {(e) => handleOperand1Change(e)}>
+          <option id="1">Operands</option>
+          <option id="2"value="col">Col</option>
+          <option id="3"value="int">Int</option>
+          <option id="4"value="string">String</option>
+          <option id="5"value="date">Date</option>
+          </select> 
+            </div>
+          )}
+          {clauseState.operand1 !== null && clauseState.operand1 === "col" ? (
+            <div>
+              <select>
+                <option value="col_br">Col_BR</option>
+                <option value="col_yv">Col_YV</option>
+              </select>
+            </div>
+          ) : (
+            clauseState.operand1 && (
+              <div>
+                <input type={"text"} />
+              </div>
+            )
+          )}
+
+          {clauseState.operator2 && (
+            <div>
+              <select value={clauseState.operand2} onChange= {(e) => handleOperand2Change(e)}>
+          <option id="1">Operands</option>
+          <option id="2"value="col">Col</option>
+          <option id="3"value="int">Int</option>
+          <option id="4"value="string">String</option>
+          <option id="5"value="date">Date</option>
+          </select> 
+            </div>
+          )}
+          {clauseState.operand2 !== null && clauseState.operand2 === "col" ? (
+            <div>
+              <select>
+                <option value="col_br">Col_BR</option>
+                <option value="col_yv">Col_YV</option>
+              </select>
+            </div>
+          ) : (
+            clauseState.operand2 && (
+              <div>
+                <input type={"text"} />
+              </div>
+            )
+          )}
+        </div>
       </div>
 
       <div className="navcontainer ">
@@ -145,7 +281,7 @@ const Template = () => {
             <Link to="/about">SQL</Link>
           </div>
 
-          <div class="template">
+          <div className="template">
             <select onChange={onOptionChangeTemplateHandler}>
               <option>Templates</option>
               {File &&
@@ -155,7 +291,7 @@ const Template = () => {
             </select>
           </div>
 
-          <div class="metadata">
+          <div className="metadata">
             <select value={selectedTable} onChange={handleTableChange}>
               <option value="">Metadata</option>
               {Schema.map((schema, index) => (

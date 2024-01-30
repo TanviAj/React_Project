@@ -76,3 +76,7 @@
 #condition {
     resize: none;
   }
+
+.whereClause {
+    display: flex;
+}
