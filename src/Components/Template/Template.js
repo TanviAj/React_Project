@@ -3,6 +3,7 @@ import "./Template.css";
 import { Link } from "react-router-dom";
 import File from "./Files.json";
 import Schema from "./Schema.json";
+import Conditions from "../Conditions/Conditions";
 
 const Template = () => {
   const [selectedTable, setSelectedTable] = useState("");
@@ -11,14 +12,22 @@ const Template = () => {
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
   const [query, setQuery] = useState(null);
-  const [clauseState, setClauseState] = useState({
-    operator1: "",
-    operator2: "",
-    operand1: null,
-    operand2: null,
-  });
+  const [clauseState, setClauseState] = useState({});
+  const [conditionsObj, setConditionsObj] = useState([]);
 
-  // setClauseState({...clauseState, operator2: "add"});
+  const addConditionsObj = () => {
+    setConditionsObj(prevConditionsObj => [...prevConditionsObj, { id: Math.random() }]);
+  };
+
+  const removeConditionsObj = (id) => {
+    setConditionsObj((prevConditionsObj) =>
+      prevConditionsObj.filter((condition) => condition.id !== id)
+    );
+    setClauseState((prev) => {
+      const { [id]: _, ...newClauseState } = prev;
+      return newClauseState;
+    });
+  };
 
   const onOptionChangeTemplateHandler = (event) => {
     const selectedTableName = event.target.value;
@@ -121,101 +130,77 @@ const Template = () => {
             console.error("File or File.ui is not defined");
             return null;
           }
-        } else {
-          setQuery(null);
-        }
+        // } else {
+        //   setQuery(null);
+        // }
+      }
+      else {
+        setQuery(null);
+        setClauseState({...clauseState, operator1:"", operator2:"", operand1:null, operand2:null});
+      }
       }
     }
   };
 
-  const handleOperand1Change = (e) => {
+  const handleOperand1Change = (e, id) => {
     e.preventDefault();
-    setClauseState({ ...clauseState, operand1: e.target.value });
-  };
-  const handleOperand2Change = (e) => {
-    e.preventDefault();
-    setClauseState({ ...clauseState, operand2: e.target.value });
-  };
-
-  const handleOperator1Change = (e) => {
-    e.preventDefault();
-    setClauseState({ ...clauseState, operator1: e.target.value });
+    setClauseState((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], operand1: e.target.value }
+    }));
   };
 
-  const handleOperator2Change = (e) => {
+  const handleOperand2Change = (e, id) => {
     e.preventDefault();
-    setClauseState({ ...clauseState, operator2: e.target.value });
+    setClauseState((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], operand2: e.target.value }
+    }));
   };
 
-  // const getRuleNames = (curentFileObject) => {
-  //   const ruleNames = [];
-  //   curentFileObject._rule_derivation._conditions.map(condition => ruleNames.push(condition._condition));
-  //   console.log('ruleNames',ruleNames);
-  //   if (ruleNames) {
-  //     setRuleNames(ruleNames);
-  //   } else {
-  //     setRuleNames([]);
-  //   }
-  //   return ruleNames;
-  // };
+  const handleOperator1Change = (e, id) => {
+    e.preventDefault();
+    setClauseState((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], operator1: e.target.value }
+    }));
+  };
 
+  const handleOperator2Change = (e, id) => {
+    e.preventDefault();
+    setClauseState((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], operator2: e.target.value }
+    }));
+  };
+  
   const showQueryContainer = (selectColumnsArray) => {
     let noramlQuery;
-    console.log("selectColumnsArray", selectColumnsArray);
-    for (
-      let i = 0;
-      i < selectColumnsArray.query_components.select.length;
-      i++
-    ) {
-      if (selectColumnsArray.query_components.select[i].attribute_name) {
-        noramlQuery = (
-          <div className="wide-inner">
-            <p>
-              <label>Select</label>
-            </p>
-            <select>
-              <option>Col</option>
-              {selectedColumns.map((file) => (
-                <option key={file.id}>
-                  {file.name}&nbsp;&nbsp;&nbsp;&nbsp;
-                </option>
-              ))}
-            </select>
-            <br />
-            <br />
+    console.log('selectColumnsArray',selectColumnsArray);
+    for(let i=0;i<selectColumnsArray.query_components.select.length;i++) {
+      if(selectColumnsArray.query_components.select[i].attribute_name){
+        noramlQuery = <div>
+        <div className="wide-inner">
+        <div className="queryStatement">
+        <p><label>Select</label></p>
+          <select>
+          <option>Col</option>
+          {selectedColumns.map((file) => (
+         <option key={file.id}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+         </option >
+        ))}
+          </select> 
+      
+        <p><label for="table">From</label></p>
+        <input type="text" id="table" defaultValue={selectColumnsArray.query_components.from.source_name}/><br/><br/>
 
-            <p>
-              <label for="table">From</label>
-            </p>
-            <input
-              type="text"
-              id="table"
-              defaultValue={
-                selectColumnsArray.query_components.from.source_name
-              }
-            />
-            <br />
-            <br />
-
-            <p>
-              <label for="condition">Where</label>
-            </p>
-            <div className="whereClause">
-              <select
-                value={clauseState.operator1}
-                onChange={(e) => handleOperator1Change(e)}
-              >
-                <option>Operator 1</option>
-                <option>AND</option>
-                <option>OR</option>
-              </select>
-            </div>
+          <p><label for="condition">Where</label></p>
+          
           </div>
-        );
+          <a href="#" className="m-2" onClick={addConditionsObj}>Add</a>
+          </div>
+          </div>
       }
-    }
-    {
-      console.log("====>", noramlQuery);
     }
     setQuery(noramlQuery);
   };
@@ -230,119 +215,28 @@ const Template = () => {
         ))}
       </div>
 
-      <div className="widecontainer">
-        {/* <div className="wide-inner">
-        <p><label>Select</label></p>
-          <select>
-          <option>Col</option>
-          {selectedColumns.map((file) => (
-         <option key={file.id} onClick={() => handleButtonClick(file)}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
-         </option >
-        ))}
-          </select> 
-          <br/><br/>
-      
-        <p><label for="table">From</label></p>
-        <input type="text" id="table"/><br/><br/>
-
-          <p><label for="condition">Where</label></p>
-          <textarea id="condition" name="condition" rows="2" cols="30" ></textarea>
-        
-          </div> */}
-        <div className="whereClause">
+      <div className="widecontainer">      
           {query}
-          {clauseState.operator1 && (
-            <div>
-              <select
-                className="operator2"
-                value={clauseState.operator2}
-                onChange={(e) => handleOperator2Change(e)}
-              >
-                <option>Operator 2</option>
-                <option>Greater Than ({">"})</option>
-                <option>Less Than ({"<"})</option>
-                <option>Greater Than Equals({">="})</option>
-                <option>Less Than Equals({"<="})</option>
-                <option>Equals({"="})</option>
-                <option>Not Equals({"!="})</option>
-              </select>
-            </div>
-          )}
-
-          {clauseState.operator2 && (
-            <div className="operands">
-              <select
-                value={clauseState.operand1}
-                onChange={(e) => handleOperand1Change(e)}
-              >
-                <option id="1">Operands</option>
-                <option id="2" value="col">
-                  Col
-                </option>
-                <option id="3" value="int">
-                  Int
-                </option>
-                <option id="4" value="string">
-                  String
-                </option>
-                <option id="5" value="date">
-                  Date
-                </option>
-              </select>
-            </div>
-          )}
-          {clauseState.operand1 !== null && clauseState.operand1 === "col" ? (
-            <div className="operandsOption">
-              <select>
-                <option value="col_br">Col_BR</option>
-                <option value="col_yv">Col_YV</option>
-              </select>
-            </div>
-          ) : (
-            clauseState.operand1 && (
-              <div className="operandsOption">
-                <input type={"text"} />
-              </div>
-            )
-          )}
-
-          {clauseState.operator2 && (
-            <div className="operands">
-              <select
-                value={clauseState.operand2}
-                onChange={(e) => handleOperand2Change(e)}
-              >
-                <option id="1">Operands</option>
-                <option id="2" value="col">
-                  Col
-                </option>
-                <option id="3" value="int">
-                  Int
-                </option>
-                <option id="4" value="string">
-                  String
-                </option>
-                <option id="5" value="date">
-                  Date
-                </option>
-              </select>
-            </div>
-          )}
-          {clauseState.operand2 !== null && clauseState.operand2 === "col" ? (
-            <div className="operandsOption">
-              <select>
-                <option value="col_br">Col_BR</option>
-                <option value="col_yv">Col_YV</option>
-              </select>
-            </div>
-          ) : (
-            clauseState.operand2 && (
-              <div className="operandsOption">
-                <input type={"text"} />
-              </div>
-            )
-          )}
-        </div>
+          <Conditions query = {query} clauseState = {clauseState[0] || {}} handleOperand1Change={(e) => handleOperand1Change(e, 0)}
+            handleOperand2Change={(e) => handleOperand2Change(e,0)}
+            handleOperator2Change={(e) => handleOperator2Change(e, 0)}/>
+          {conditionsObj.map(condition => (
+            <>
+             <div className="mx-2 my-2"> 
+          <select value={clauseState.operator1} onChange= {(e) => handleOperator1Change(e,0)}>
+          <option>Operator 1</option>
+          <option>AND</option>
+          <option>OR</option>
+          </select> 
+          <a href="#" className="m-2" onClick={() => removeConditionsObj(condition.id)}>Remove</a>
+          </div>
+            {<Conditions query = {query} clauseState = {clauseState[condition.id] || {}} handleOperand1Change={(e) => handleOperand1Change(e, condition.id)}
+            handleOperand2Change={(e) => handleOperand2Change(e, condition.id)}
+            handleOperator2Change={(e) => handleOperator2Change(e, condition.id)}
+            key = {condition.id}/>}
+            </>
+            
+          ))}
       </div>
 
       <div className="navcontainer ">

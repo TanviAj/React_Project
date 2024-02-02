@@ -18,13 +18,6 @@ label {
   padding: 0.25rem 0;
 }
 
-/* input {
-  margin: 0.5rem 0;
-  padding: 1rem;
-  border: none;
-  border-radius: 10px;
-} */
-
 button {
   background-color: #6A88A4;
   padding: 10px;
@@ -58,7 +51,7 @@ div.VNavBar{
 
 div.VNavbarContainer {
 
-  height: 100%;
+  height: 95%;
   position:fixed;
   width: 220px;
   z-index: -1;

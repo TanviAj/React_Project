@@ -3,21 +3,6 @@
     margin-left: 10px;
 }
 
-  /* .dropdown{
-   width: 200px;
-   justify-content: space-between;
-   column-gap: 10px;
-   margin-left: 250px;
-   margin-top: 10px;
-} */
-
-/* .links{
-   margin-left: 60px;
-   justify-content:space-between;
-   margin-top: 10px;
-   color: aliceblue;
-} */
-
 .template{
     margin-left: 480px;
     
@@ -76,7 +61,16 @@
 }
 
 .wide-inner{
+    display: flex;
     margin-left: 20px;
+    margin-right: 20px;
+    align-items: baseline;
+}
+
+.queryStatement{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
 }
 
 
