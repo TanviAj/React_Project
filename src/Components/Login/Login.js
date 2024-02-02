@@ -31,6 +31,7 @@ export const Login = (props) => {
                     <input value={username} onChange={(e) => setName(e.target.value)} type = "name" placeholder="UserName" />
                     <label htmlFor = "password">Password</label>
                     <input value={password} onChange={(e) => setPass(e.target.value)} type = "password" placeholder="**********" id="password" name="password" />
+                    <br/>
                     <button onClick={handleLogin}>Log In</button>
                 </form>
                     

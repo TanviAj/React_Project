@@ -1,6 +1,6 @@
 .horizontal-navbar{
     text-align: left;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
   /* .dropdown{
@@ -20,6 +20,7 @@
 
 .template{
     margin-left: 480px;
+    
     /* margin-top: 0px; */
 }
 
@@ -28,24 +29,29 @@
     /* margin-top: 0px; */
 }
 
-.container{
+.dropdown{
+    background-color: #6A88A4;
+}
+
+.verticalContainer{
     position: fixed;
     height:100%;
     display: block;
     width: 200px;
-    background-color: rgb(159, 159, 203);
+    background-color: #C7D3D8;
     margin-top: 100px;
-    margin-left: 250px;
+    margin-left: 240px;
+    padding-left: 10px;
 }
 
 .navcontainer{
     position: fixed;
     height:10%;
-    width: 1220px;
+    width: 1230px;
     display: flex ;
-    background-color: rgb(159, 159, 203);
+    background-color: #C7D3D8;
     margin-top: 10px;
-    margin-left: 250px;
+    margin-left: 240px;
     margin-right: 100px;
 }
 
@@ -63,15 +69,16 @@
 .widecontainer{
     position: fixed;
     height:65%;
-    width: 1000px;
-    background-color: rgb(159, 159, 203);
+    width: 1010px;
+    background-color: #C7D3D8;
     margin-top: 100px;
-    margin-left: 470px;
+    margin-left: 460px;
 }
 
 .wide-inner{
     margin-left: 20px;
 }
+
 
 #condition {
     resize: none;
@@ -79,4 +86,44 @@
 
 .whereClause {
     display: flex;
+    /* margin-top: 20px; */
+}
+
+.operator2{
+    margin-top: 272px;   
+}
+
+.operands{
+    margin-top: 272px;
+}
+
+.operandsOption{
+margin-top: 295px;
+
+}
+
+.editButton{
+    margin-top: 600px;
+    margin-left: 1300px;
+}
+
+.modalContainer{
+    /* margin-top: 100px;
+    margin-left: 200px; */
+    margin: 15% 0;
+}
+
+.modal-body{
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-check-label{
+    margin-left: 10px;
+}
+
+.modalDropdown{
+    width: 300px;
+    margin-left: 90px;
+    margin-bottom: 10px;
 }

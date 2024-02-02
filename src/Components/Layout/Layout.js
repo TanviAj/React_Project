@@ -10,8 +10,12 @@ const Layout = () => {
   const location = useLocation();
   return (
     <>
-     <div className="VNavbarContainer">
+    <div className="navBar">
       <h2>Attribute Manager</h2>
+      <p className="navBar1">User login</p>
+    </div>
+     <div className="VNavbarContainer">
+     {/* <h2>Attribute Manager</h2> */}
       <nav className="VNavbarNav">
         <ul className="VNavbarList">
           <li className="sidebarMenuIcon">

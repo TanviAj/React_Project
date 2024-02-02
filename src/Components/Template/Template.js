@@ -11,11 +11,16 @@ const Template = () => {
   const [showButton, setShowButton] = useState(true);
   const [selectedTableName, setSelectedTableName] = useState("");
   const [query, setQuery] = useState(null);
-  const [clauseState, setClauseState] = useState({operator1:"", operator2:"", operand1:null, operand2:null});
+  const [clauseState, setClauseState] = useState({
+    operator1: "",
+    operator2: "",
+    operand1: null,
+    operand2: null,
+  });
 
   // setClauseState({...clauseState, operator2: "add"});
 
-  const onOptionChangeTemplateHandler = (event) => {     
+  const onOptionChangeTemplateHandler = (event) => {
     const selectedTableName = event.target.value;
     setSelectedTableName(selectedTableName);
     const selectedTableData = File.find(
@@ -23,11 +28,11 @@ const Template = () => {
     );
     console.log("selectedTableData", selectedTableData);
     if (selectedTableData.ui.selection) {
-        console.log("Hello");
-        setShowButton(true);
+      console.log("Hello");
+      setShowButton(true);
     } else {
-        console.log("Else hello");
-        setShowButton(false);
+      console.log("Else hello");
+      setShowButton(false);
     }
   };
 
@@ -63,66 +68,84 @@ const Template = () => {
   };
 
   const findConfigurationById = (id) => {
-    for(let i=0;i < File.length; i++){
+    for (let i = 0; i < File.length; i++) {
       let curentFileObject = File[i];
-      console.log('jabcsc',id, curentFileObject)
-      for(let j=0;j<curentFileObject.query_components.select.length; j++){
-      if(id && (id.toLowerCase() === curentFileObject.query_components.select[j].attribute_name?.toLowerCase())){
-        console.log("File found:", File);
-        console.log("Target Attribute:", curentFileObject.query_components.select[j].attribute_name);
-        // getRuleNames(curentFileObject.query_components.select[j]);
-        showQueryContainer(curentFileObject);
-        console.log('curentFileObject',curentFileObject);
-        //getRuleType(curentFileObject.ui.selection[j]);
-        // Check if File and File.ui are defined
-        console.log('File && File.query_components',File);
-        if (File && File[0].query_components) {
-          const { query_components } = File[0];
-      
-          // Check if ui.selection is defined
-          if (query_components && query_components.select) {
-            const selectedConfiguration = query_components.select.find((config) => config.attribute_name.toLowerCase() === id.toLowerCase());
-            // Check if a configuration was found
-            if (selectedConfiguration) {
-              console.log('selectedConfiguration',selectedConfiguration);
-              return selectedConfiguration;
+      console.log("jabcsc", id, curentFileObject);
+      for (
+        let j = 0;
+        j < curentFileObject.query_components.select.length;
+        j++
+      ) {
+        if (
+          id &&
+          id.toLowerCase() ===
+            curentFileObject.query_components.select[
+              j
+            ].attribute_name?.toLowerCase()
+        ) {
+          console.log("File found:", File);
+          console.log(
+            "Target Attribute:",
+            curentFileObject.query_components.select[j].attribute_name
+          );
+          // getRuleNames(curentFileObject.query_components.select[j]);
+          showQueryContainer(curentFileObject);
+          console.log("curentFileObject", curentFileObject);
+          //getRuleType(curentFileObject.ui.selection[j]);
+          // Check if File and File.ui are defined
+          console.log("File && File.query_components", File);
+          if (File && File[0].query_components) {
+            const { query_components } = File[0];
+
+            // Check if ui.selection is defined
+            if (query_components && query_components.select) {
+              const selectedConfiguration = query_components.select.find(
+                (config) =>
+                  config.attribute_name.toLowerCase() === id.toLowerCase()
+              );
+              // Check if a configuration was found
+              if (selectedConfiguration) {
+                console.log("selectedConfiguration", selectedConfiguration);
+                return selectedConfiguration;
+              } else {
+                console.error(
+                  "Configuration not found for column with ID:",
+                  id
+                );
+              }
             } else {
-              console.error("Configuration not found for column with ID:", id); 
+              console.error("ui.selection is not defined");
+              return null;
             }
           } else {
-            console.error("ui.selection is not defined");
+            console.error("File or File.ui is not defined");
             return null;
           }
         } else {
-          console.error("File or File.ui is not defined");
-          return null;
+          setQuery(null);
         }
-      }
-      else {
-        setQuery(null);
-      }
       }
     }
   };
 
-  const handleOperand1Change = (e)=> {
+  const handleOperand1Change = (e) => {
     e.preventDefault();
-    setClauseState({...clauseState, operand1: e.target.value});
-  }
-  const handleOperand2Change = (e)=> {
+    setClauseState({ ...clauseState, operand1: e.target.value });
+  };
+  const handleOperand2Change = (e) => {
     e.preventDefault();
-    setClauseState({...clauseState, operand2: e.target.value});
-  }
+    setClauseState({ ...clauseState, operand2: e.target.value });
+  };
 
-  const handleOperator1Change= (e)=> {
+  const handleOperator1Change = (e) => {
     e.preventDefault();
-    setClauseState({...clauseState, operator1: e.target.value});
-  }
+    setClauseState({ ...clauseState, operator1: e.target.value });
+  };
 
-  const handleOperator2Change= (e)=> {
+  const handleOperator2Change = (e) => {
     e.preventDefault();
-    setClauseState({...clauseState, operator2: e.target.value});
-  }
+    setClauseState({ ...clauseState, operator2: e.target.value });
+  };
 
   // const getRuleNames = (curentFileObject) => {
   //   const ruleNames = [];
@@ -135,49 +158,74 @@ const Template = () => {
   //   }
   //   return ruleNames;
   // };
-  
+
   const showQueryContainer = (selectColumnsArray) => {
     let noramlQuery;
-    console.log('selectColumnsArray',selectColumnsArray);
-    for(let i=0;i<selectColumnsArray.query_components.select.length;i++) {
-      if(selectColumnsArray.query_components.select[i].attribute_name){
-        noramlQuery = <div className="wide-inner">
-        <p><label>Select</label></p>
-          <select>
-          <option>Col</option>
-          {selectedColumns.map((file) => (
-         <option key={file.id}>{file.name}&nbsp;&nbsp;&nbsp;&nbsp;
-         </option >
-        ))}
-          </select> 
-          <br/><br/>
-      
-        <p><label for="table">From</label></p>
-        <input type="text" id="table" defaultValue={selectColumnsArray.query_components.from.source_name}/><br/><br/>
+    console.log("selectColumnsArray", selectColumnsArray);
+    for (
+      let i = 0;
+      i < selectColumnsArray.query_components.select.length;
+      i++
+    ) {
+      if (selectColumnsArray.query_components.select[i].attribute_name) {
+        noramlQuery = (
+          <div className="wide-inner">
+            <p>
+              <label>Select</label>
+            </p>
+            <select>
+              <option>Col</option>
+              {selectedColumns.map((file) => (
+                <option key={file.id}>
+                  {file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+                </option>
+              ))}
+            </select>
+            <br />
+            <br />
 
-          <p><label for="condition">Where</label></p>
-          <div className="whereClause">
-          <select value={clauseState.operator1} onChange= {(e) => handleOperator1Change(e)}>
-          <option>Operator 1</option>
-          <option>AND</option>
-          <option>OR</option>
-          </select> 
+            <p>
+              <label for="table">From</label>
+            </p>
+            <input
+              type="text"
+              id="table"
+              defaultValue={
+                selectColumnsArray.query_components.from.source_name
+              }
+            />
+            <br />
+            <br />
+
+            <p>
+              <label for="condition">Where</label>
+            </p>
+            <div className="whereClause">
+              <select
+                value={clauseState.operator1}
+                onChange={(e) => handleOperator1Change(e)}
+              >
+                <option>Operator 1</option>
+                <option>AND</option>
+                <option>OR</option>
+              </select>
+            </div>
           </div>
-        
-          </div>
+        );
       }
     }
-    {console.log("====>", noramlQuery)}
+    {
+      console.log("====>", noramlQuery);
+    }
     setQuery(noramlQuery);
-  }
-  
+  };
 
   return (
     <div className="">
-      <div className="container">
+      <div className="verticalContainer">
         {selectedColumns.map((file) => (
           <button key={file.id} onClick={() => handleButtonClick(file)}>
-            {file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+            {file.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </button>
         ))}
       </div>
@@ -206,6 +254,7 @@ const Template = () => {
           {clauseState.operator1 && (
             <div>
               <select
+                className="operator2"
                 value={clauseState.operator2}
                 onChange={(e) => handleOperator2Change(e)}
               >
@@ -221,18 +270,29 @@ const Template = () => {
           )}
 
           {clauseState.operator2 && (
-            <div>
-              <select value={clauseState.operand1} onChange= {(e) => handleOperand1Change(e)}>
-          <option id="1">Operands</option>
-          <option id="2"value="col">Col</option>
-          <option id="3"value="int">Int</option>
-          <option id="4"value="string">String</option>
-          <option id="5"value="date">Date</option>
-          </select> 
+            <div className="operands">
+              <select
+                value={clauseState.operand1}
+                onChange={(e) => handleOperand1Change(e)}
+              >
+                <option id="1">Operands</option>
+                <option id="2" value="col">
+                  Col
+                </option>
+                <option id="3" value="int">
+                  Int
+                </option>
+                <option id="4" value="string">
+                  String
+                </option>
+                <option id="5" value="date">
+                  Date
+                </option>
+              </select>
             </div>
           )}
           {clauseState.operand1 !== null && clauseState.operand1 === "col" ? (
-            <div>
+            <div className="operandsOption">
               <select>
                 <option value="col_br">Col_BR</option>
                 <option value="col_yv">Col_YV</option>
@@ -240,25 +300,36 @@ const Template = () => {
             </div>
           ) : (
             clauseState.operand1 && (
-              <div>
+              <div className="operandsOption">
                 <input type={"text"} />
               </div>
             )
           )}
 
           {clauseState.operator2 && (
-            <div>
-              <select value={clauseState.operand2} onChange= {(e) => handleOperand2Change(e)}>
-          <option id="1">Operands</option>
-          <option id="2"value="col">Col</option>
-          <option id="3"value="int">Int</option>
-          <option id="4"value="string">String</option>
-          <option id="5"value="date">Date</option>
-          </select> 
+            <div className="operands">
+              <select
+                value={clauseState.operand2}
+                onChange={(e) => handleOperand2Change(e)}
+              >
+                <option id="1">Operands</option>
+                <option id="2" value="col">
+                  Col
+                </option>
+                <option id="3" value="int">
+                  Int
+                </option>
+                <option id="4" value="string">
+                  String
+                </option>
+                <option id="5" value="date">
+                  Date
+                </option>
+              </select>
             </div>
           )}
           {clauseState.operand2 !== null && clauseState.operand2 === "col" ? (
-            <div>
+            <div className="operandsOption">
               <select>
                 <option value="col_br">Col_BR</option>
                 <option value="col_yv">Col_YV</option>
@@ -266,7 +337,7 @@ const Template = () => {
             </div>
           ) : (
             clauseState.operand2 && (
-              <div>
+              <div className="operandsOption">
                 <input type={"text"} />
               </div>
             )
@@ -282,7 +353,10 @@ const Template = () => {
           </div>
 
           <div className="template">
-            <select onChange={onOptionChangeTemplateHandler}>
+            <select
+              className="dropdown"
+              onChange={onOptionChangeTemplateHandler}
+            >
               <option>Templates</option>
               {File &&
                 File.map((file) => {
@@ -292,7 +366,11 @@ const Template = () => {
           </div>
 
           <div className="metadata">
-            <select value={selectedTable} onChange={handleTableChange}>
+            <select
+              className="dropdown"
+              value={selectedTable}
+              onChange={handleTableChange}
+            >
               <option value="">Metadata</option>
               {Schema.map((schema, index) => (
                 <option key={index} value={schema.table_name}>
@@ -302,6 +380,80 @@ const Template = () => {
             </select>
           </div>
         </nav>
+      </div>
+
+      <button
+          type="button"
+          className="editButton"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Edit
+        </button>
+      <div
+        className="modalContainer modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Edit
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                ></input>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Add
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  checked
+                ></input>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Remove
+                </label><br/>
+                
+            
+              </div>
+            </div>
+            <select className="modalDropdown">
+                  <option>Rule</option>
+                </select>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" className="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

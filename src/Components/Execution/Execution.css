@@ -1,3 +1,30 @@
 .execution{
-    text-align: center;
+    position: fixed;
+    height: 100%;
+    width: 1220px;
+    background-color: #C7D3D8;
+    padding: 10px;
+    text-align: left;
+    margin-left: 240px; 
+    margin-top: 20px; 
+}
+
+.executionButton{
+    margin-left: 1000px;
+}
+
+.templateDropdown{
+    background-color: #6A88A4;
+}
+
+.metadataDropdown{
+    background-color: #6A88A4;
+    margin-left: 4px;
+}
+
+.cron{
+    padding: 0%;
+    background-color: #6A88A4;
+    margin-left: 38px;
+    border: none;
 }
