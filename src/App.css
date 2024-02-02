@@ -18,13 +18,6 @@ label {
   padding: 0.25rem 0;
 }
 
-input {
-  margin: 0.5rem 0;
-  padding: 1rem;
-  border: none;
-  border-radius: 10px;
-}
-
 button {
   /* border: 0; */
   background-color: rgb(139, 185, 245);
@@ -60,12 +53,11 @@ div.VNavBar{
 
 div.VNavbarContainer {
 
-  height: 100%;
+  height: 95%;
   position:fixed;
   width: 220px;
   z-index: -1;
   /* margin-top: 46px; */
-  height: 100%;
   /* top: 46px;
   bottom: 0px;
   overflow: auto; */
