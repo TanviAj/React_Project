@@ -20,7 +20,7 @@ const Conditions = ({id,query,clauseState,handleOperand1Change,handleOperand2Cha
         <div className='mx-2'>
           {clauseState.operator2 && (
             <div>
-              <select  value={clauseState.operand1} onChange= {(e) => handleOperand1Change(e,id)}>
+              <select className='w-100' value={clauseState.operand1} onChange= {(e) => handleOperand1Change(e,id)}>
                 <option id="1">Operands</option>
                 <option id="2" value="col">Col</option>
                 <option id="3" value="int">Int</option>
@@ -31,7 +31,7 @@ const Conditions = ({id,query,clauseState,handleOperand1Change,handleOperand2Cha
           )}
           {clauseState.operand1 !== null && clauseState.operand1 === "col" ? (
             <div>
-              <select >
+              <select className='w-100'>
                 <option value="col_br">Col_BR</option>
                 <option value="col_yv">Col_YV</option>
               </select>
@@ -46,7 +46,7 @@ const Conditions = ({id,query,clauseState,handleOperand1Change,handleOperand2Cha
 
           {clauseState.operator2 && (
             <div>
-              <select value={clauseState.operand2} onChange= {(e) => handleOperand2Change(e, id)}>
+              <select className='w-100' value={clauseState.operand2} onChange= {(e) => handleOperand2Change(e, id)}>
           <option id="1">Operands</option>
           <option id="2"value="col">Col</option>
           <option id="3"value="int">Int</option>
@@ -57,7 +57,7 @@ const Conditions = ({id,query,clauseState,handleOperand1Change,handleOperand2Cha
           )}
           {clauseState.operand2 !== null && clauseState.operand2 === "col" ? (
             <div>
-              <select >
+              <select className='w-100'>
                 <option value="col_br">Col_BR</option>
                 <option value="col_yv">Col_YV</option>
               </select>

@@ -14,6 +14,9 @@ const Template = () => {
   const [query, setQuery] = useState(null);
   const [clauseState, setClauseState] = useState({});
   const [conditionsObj, setConditionsObj] = useState([]);
+  const [modalValues,setModalValues] = useState({modifyCondition: ""});
+  const [currCondition,setCurrCondition] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const addConditionsObj = () => {
     setConditionsObj(prevConditionsObj => [...prevConditionsObj, { id: Math.random() }]);
@@ -59,6 +62,21 @@ const Template = () => {
       setSelectedColumns([]);
     }
   };
+
+  const onRadioButtonClick = (e) => {
+    setModalValues({...modalValues,  modifyCondition:e.target.value });
+    setErrorMsg("");
+  }
+
+  const handleSubmitButton = () => {
+    if(modalValues.modifyCondition === 'add'){
+      addConditionsObj();
+    } else if(modalValues.modifyCondition === "remove"){
+      removeConditionsObj(currCondition);
+    } else {
+      setErrorMsg("Please Select Add/Remove");
+    }
+  }
 
   const handleButtonClick = (file) => {
     // Do something with the selected file, for example:
@@ -197,7 +215,14 @@ const Template = () => {
           <p><label for="condition">Where</label></p>
           
           </div>
-          <a href="#" className="m-2" onClick={addConditionsObj}>Add</a>
+          <button
+          type="button"
+          className="editButton"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Edit
+        </button>
           </div>
           </div>
       }
@@ -228,7 +253,15 @@ const Template = () => {
           <option>AND</option>
           <option>OR</option>
           </select> 
-          <a href="#" className="m-2" onClick={() => removeConditionsObj(condition.id)}>Remove</a>
+          <button
+          type="button"
+          className="editButton m-2"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          onClick={() => setCurrCondition(condition.id)}
+        >
+          Edit
+        </button>
           </div>
             {<Conditions query = {query} clauseState = {clauseState[condition.id] || {}} handleOperand1Change={(e) => handleOperand1Change(e, condition.id)}
             handleOperand2Change={(e) => handleOperand2Change(e, condition.id)}
@@ -275,15 +308,6 @@ const Template = () => {
           </div>
         </nav>
       </div>
-
-      <button
-          type="button"
-          className="editButton"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Edit
-        </button>
       <div
         className="modalContainer modal fade"
         id="exampleModal"
@@ -311,6 +335,8 @@ const Template = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
+                  value={'add'}
+                  onClick={(e) => onRadioButtonClick(e)}
                 ></input>
                 <label class="form-check-label" for="flexRadioDefault1">
                   Add
@@ -322,15 +348,15 @@ const Template = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
-                  checked
+                  value={'remove'}
+                  onClick={(e) => onRadioButtonClick(e)}
                 ></input>
                 <label class="form-check-label" for="flexRadioDefault2">
                   Remove
                 </label><br/>
-                
-            
               </div>
             </div>
+            {errorMsg && <p className="errMsg">{errorMsg}</p>}
             <select className="modalDropdown">
                   <option>Rule</option>
                 </select>
@@ -342,7 +368,7 @@ const Template = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={() => handleSubmitButton()}>
                 Save changes
               </button>
             </div>

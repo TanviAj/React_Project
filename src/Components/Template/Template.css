@@ -96,9 +96,9 @@ margin-top: 295px;
 
 }
 
-.editButton{
-    margin-top: 600px;
-    margin-left: 1300px;
+.errMsg{
+    color: red;
+    margin-left: 30%;
 }
 
 .modalContainer{
