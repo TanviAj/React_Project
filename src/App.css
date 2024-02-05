@@ -19,8 +19,7 @@ label {
 }
 
 button {
-  /* border: 0; */
-  background-color: rgb(139, 185, 245);
+  background-color: #6A88A4;
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
@@ -32,7 +31,6 @@ button {
   color: white;
   text-decoration: underline;
 }
-
 
 
 /*Layout css*/
@@ -57,12 +55,13 @@ div.VNavbarContainer {
   position:fixed;
   width: 220px;
   z-index: -1;
-  /* margin-top: 46px; */
+  margin-top: 0px;
+  height: 93%;
   /* top: 46px;
   bottom: 0px;
   overflow: auto; */
   /* Hide the scrollbar */
-  background-color: rgba(74,109,180,255);
+  background-color: #6A88A4;
   /* border-bottom-right-radius: 30px; */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;
@@ -73,7 +72,7 @@ div.VNavbarContainer::-webkit-scrollbar {
 .VNavbarNav{
   height: 100%;
   /* background-color: rgba(74,109,180,0.88); */
-  margin-top: 76px;
+  margin-top: 40px;
 }
 .VNavbarList {
   height: 100%;

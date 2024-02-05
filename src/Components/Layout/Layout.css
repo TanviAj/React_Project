@@ -21,3 +21,16 @@
     color: rgba(255, 255, 255);
     font-weight: 550;
   }
+
+  .navBar{
+    background-color: #183957;
+    color: #FAFAFA;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+
+  .navBar1{
+    text-align: right;
+  }

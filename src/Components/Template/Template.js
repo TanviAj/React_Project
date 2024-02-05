@@ -14,6 +14,9 @@ const Template = () => {
   const [query, setQuery] = useState(null);
   const [clauseState, setClauseState] = useState({});
   const [conditionsObj, setConditionsObj] = useState([]);
+  const [modalValues,setModalValues] = useState({modifyCondition: ""});
+  const [currCondition,setCurrCondition] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const addConditionsObj = () => {
     setConditionsObj(prevConditionsObj => [...prevConditionsObj, { id: Math.random() }]);
@@ -29,7 +32,7 @@ const Template = () => {
     });
   };
 
-  const onOptionChangeTemplateHandler = (event) => {     
+  const onOptionChangeTemplateHandler = (event) => {
     const selectedTableName = event.target.value;
     setSelectedTableName(selectedTableName);
     const selectedTableData = File.find(
@@ -37,11 +40,11 @@ const Template = () => {
     );
     console.log("selectedTableData", selectedTableData);
     if (selectedTableData.ui.selection) {
-        console.log("Hello");
-        setShowButton(true);
+      console.log("Hello");
+      setShowButton(true);
     } else {
-        console.log("Else hello");
-        setShowButton(false);
+      console.log("Else hello");
+      setShowButton(false);
     }
   };
 
@@ -60,6 +63,21 @@ const Template = () => {
     }
   };
 
+  const onRadioButtonClick = (e) => {
+    setModalValues({...modalValues,  modifyCondition:e.target.value });
+    setErrorMsg("");
+  }
+
+  const handleSubmitButton = () => {
+    if(modalValues.modifyCondition === 'add'){
+      addConditionsObj();
+    } else if(modalValues.modifyCondition === "remove"){
+      removeConditionsObj(currCondition);
+    } else {
+      setErrorMsg("Please Select Add/Remove");
+    }
+  }
+
   const handleButtonClick = (file) => {
     // Do something with the selected file, for example:
     console.log(`Button clicked for file: ${JSON.stringify(file)}`);
@@ -77,40 +95,62 @@ const Template = () => {
   };
 
   const findConfigurationById = (id) => {
-    for(let i=0;i < File.length; i++){
+    for (let i = 0; i < File.length; i++) {
       let curentFileObject = File[i];
-      console.log('jabcsc',id, curentFileObject)
-      for(let j=0;j<curentFileObject.query_components.select.length; j++){
-      if(id && (id.toLowerCase() === curentFileObject.query_components.select[j].attribute_name?.toLowerCase())){
-        console.log("File found:", File);
-        console.log("Target Attribute:", curentFileObject.query_components.select[j].attribute_name);
-        // getRuleNames(curentFileObject.query_components.select[j]);
-        showQueryContainer(curentFileObject);
-        console.log('curentFileObject',curentFileObject);
-        //getRuleType(curentFileObject.ui.selection[j]);
-        // Check if File and File.ui are defined
-        console.log('File && File.query_components',File);
-        if (File && File[0].query_components) {
-          const { query_components } = File[0];
-      
-          // Check if ui.selection is defined
-          if (query_components && query_components.select) {
-            const selectedConfiguration = query_components.select.find((config) => config.attribute_name.toLowerCase() === id.toLowerCase());
-            // Check if a configuration was found
-            if (selectedConfiguration) {
-              console.log('selectedConfiguration',selectedConfiguration);
-              return selectedConfiguration;
+      console.log("jabcsc", id, curentFileObject);
+      for (
+        let j = 0;
+        j < curentFileObject.query_components.select.length;
+        j++
+      ) {
+        if (
+          id &&
+          id.toLowerCase() ===
+            curentFileObject.query_components.select[
+              j
+            ].attribute_name?.toLowerCase()
+        ) {
+          console.log("File found:", File);
+          console.log(
+            "Target Attribute:",
+            curentFileObject.query_components.select[j].attribute_name
+          );
+          // getRuleNames(curentFileObject.query_components.select[j]);
+          showQueryContainer(curentFileObject);
+          console.log("curentFileObject", curentFileObject);
+          //getRuleType(curentFileObject.ui.selection[j]);
+          // Check if File and File.ui are defined
+          console.log("File && File.query_components", File);
+          if (File && File[0].query_components) {
+            const { query_components } = File[0];
+
+            // Check if ui.selection is defined
+            if (query_components && query_components.select) {
+              const selectedConfiguration = query_components.select.find(
+                (config) =>
+                  config.attribute_name.toLowerCase() === id.toLowerCase()
+              );
+              // Check if a configuration was found
+              if (selectedConfiguration) {
+                console.log("selectedConfiguration", selectedConfiguration);
+                return selectedConfiguration;
+              } else {
+                console.error(
+                  "Configuration not found for column with ID:",
+                  id
+                );
+              }
             } else {
-              console.error("Configuration not found for column with ID:", id); 
+              console.error("ui.selection is not defined");
+              return null;
             }
           } else {
-            console.error("ui.selection is not defined");
+            console.error("File or File.ui is not defined");
             return null;
           }
-        } else {
-          console.error("File or File.ui is not defined");
-          return null;
-        }
+        // } else {
+        //   setQuery(null);
+        // }
       }
       else {
         setQuery(null);
@@ -175,21 +215,27 @@ const Template = () => {
           <p><label for="condition">Where</label></p>
           
           </div>
-          <a href="#" className="m-2" onClick={addConditionsObj}>Add</a>
+          <button
+          type="button"
+          className="editButton"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Edit
+        </button>
           </div>
           </div>
       }
     }
     setQuery(noramlQuery);
-  }
-  
+  };
 
   return (
     <div className="">
-      <div className="container">
+      <div className="verticalContainer">
         {selectedColumns.map((file) => (
           <button key={file.id} onClick={() => handleButtonClick(file)}>
-            {file.name}&nbsp;&nbsp;&nbsp;&nbsp;
+            {file.name}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </button>
         ))}
       </div>
@@ -207,7 +253,15 @@ const Template = () => {
           <option>AND</option>
           <option>OR</option>
           </select> 
-          <a href="#" className="m-2" onClick={() => removeConditionsObj(condition.id)}>Remove</a>
+          <button
+          type="button"
+          className="editButton m-2"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          onClick={() => setCurrCondition(condition.id)}
+        >
+          Edit
+        </button>
           </div>
             {<Conditions query = {query} clauseState = {clauseState[condition.id] || {}} handleOperand1Change={(e) => handleOperand1Change(e, condition.id)}
             handleOperand2Change={(e) => handleOperand2Change(e, condition.id)}
@@ -226,7 +280,10 @@ const Template = () => {
           </div>
 
           <div className="template">
-            <select onChange={onOptionChangeTemplateHandler}>
+            <select
+              className="dropdown"
+              onChange={onOptionChangeTemplateHandler}
+            >
               <option>Templates</option>
               {File &&
                 File.map((file) => {
@@ -236,7 +293,11 @@ const Template = () => {
           </div>
 
           <div className="metadata">
-            <select value={selectedTable} onChange={handleTableChange}>
+            <select
+              className="dropdown"
+              value={selectedTable}
+              onChange={handleTableChange}
+            >
               <option value="">Metadata</option>
               {Schema.map((schema, index) => (
                 <option key={index} value={schema.table_name}>
@@ -246,6 +307,73 @@ const Template = () => {
             </select>
           </div>
         </nav>
+      </div>
+      <div
+        className="modalContainer modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Edit
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  value={'add'}
+                  onClick={(e) => onRadioButtonClick(e)}
+                ></input>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Add
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  value={'remove'}
+                  onClick={(e) => onRadioButtonClick(e)}
+                ></input>
+                <label class="form-check-label" for="flexRadioDefault2">
+                  Remove
+                </label><br/>
+              </div>
+            </div>
+            {errorMsg && <p className="errMsg">{errorMsg}</p>}
+            <select className="modalDropdown">
+                  <option>Rule</option>
+                </select>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" className="btn btn-primary" onClick={() => handleSubmitButton()}>
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
